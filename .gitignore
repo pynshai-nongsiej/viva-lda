@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Viva-LDA Specific - Large Data & Models
+models/
+data/
+PDF/
+*.pdf
+tst/
+temp/
+*.wav
+
+# Unit Test / Coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
