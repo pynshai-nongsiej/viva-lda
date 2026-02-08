@@ -3,7 +3,9 @@ from rich.panel import Panel
 from rich.text import Text
 from rich.table import Table
 from rich import box
+from rich.progress import Progress, BarColumn, TextColumn
 from src.analytics import AnalyticsEngine
+import datetime
 
 class DashboardUI:
     def __init__(self):
@@ -31,77 +33,112 @@ class DashboardUI:
         )
 
     def generate_header(self):
-        title = Text("Viva-LDA: Offline Memory Revision System", style="bold white on blue", justify="center")
-        return Panel(title, style="blue")
+        grid = Table.grid(expand=True)
+        grid.add_column(justify="left", ratio=1)
+        grid.add_column(justify="center", ratio=2)
+        grid.add_column(justify="right", ratio=1)
+        
+        grid.add_row(
+            Text(datetime.datetime.now().strftime("%Y-%m-%d"), style="dim"),
+            Text("Viva-LDA: Offline Memory Revision System", style="bold white"),
+            Text("v2.0 (Whisper+Excel)", style="dim")
+        )
+        return Panel(grid, style="white on blue")
 
     def generate_question_area(self):
         if not self.current_question:
             content = Text("Preparing Session...", justify="center", style="dim")
         else:
-            q_text = Text(self.current_question['question_text'], style="bold cyan", justify="center")
+            q_text = Text(self.current_question['question_text'], style="bold cyan size=20", justify="center")
             
-            opts = Table(box=None, show_header=False, expand=True)
-            opts.add_column("Key", style="bold yellow", width=10)
+            # Options Table
+            opts = Table(box=box.ROUNDED, show_header=False, expand=True, border_style="dim")
+            opts.add_column("Key", style="bold yellow", width=8, justify="center")
             opts.add_column("Text", style="white")
             
-            opts.add_row("(A)", self.current_question['option_a'])
-            opts.add_row(" ", "")
-            opts.add_row("(B)", self.current_question['option_b'])
-            opts.add_row(" ", "")
-            opts.add_row("(C)", self.current_question['option_c'])
-            opts.add_row(" ", "")
-            opts.add_row("(D)", self.current_question['option_d'])
+            opts.add_row("A", self.current_question['option_a'])
+            opts.add_row("B", self.current_question['option_b'])
+            opts.add_row("C", self.current_question['option_c'])
+            opts.add_row("D", self.current_question['option_d'])
             
             content = Table.grid(expand=True)
-            content.add_row(Panel(q_text, box=box.HEAVY, title=f"Question {self.current_index}/{self.total_questions}"))
-            content.add_row(Panel(opts, title="Options"))
+            content.add_row(Panel(q_text, box=box.HEAVY, border_style="cyan", title=f"[b]Question {self.current_index}/{self.total_questions}[/b]"))
+            content.add_row(Text(" "))
+            content.add_row(opts)
+            content.add_row(Text(" "))
             
-            if self.user_answer:
-                ans_text = Text(f"You said: {self.user_answer}", style="bold magenta")
-                content.add_row(Panel(ans_text, style="magenta"))
-                
+            # Feedback Area
+            feedback_panel = None
             if self.feedback:
-                fb_style = "green" if "Correct" in self.feedback else "red"
-                content.add_row(Panel(Text(self.feedback, style=f"bold {fb_style}"), title="Result"))
+                color = "green" if "Correct" in self.feedback else "red"
+                feedback_panel = Panel(Text(self.feedback, justify="center", style=f"bold white on {color}"), box=box.DOUBLE, border_style=color)
+            elif self.user_answer:
+                 feedback_panel = Panel(Text(f"You said: {self.user_answer}", justify="center", style="bold magenta"), border_style="magenta", title="Processing")
+            else:
+                 feedback_panel = Panel(Text("Waiting for answer...", justify="center", style="dim"), border_style="dim")
+            
+            content.add_row(feedback_panel)
 
         return Panel(content, title="Active Revision", border_style="green")
 
     def generate_sidebar(self):
         stats = self.analytics.get_overall_stats()
-        weak_topics = self.analytics.get_weakest_topics()
+        weak_topics = self.analytics.get_weakest_topics(limit=5)
         
-        # Overall Stats Table
-        stat_table = Table(title="Overall Progress", box=box.SIMPLE)
-        stat_table.add_column("Metric", style="cyan")
-        stat_table.add_column("Value", style="green")
+        # Mastery Progress Bar
+        mastery_pct = int(stats['mastery'])
+        
+        mastery_bar = Progress(
+            TextColumn("[bold blue]{task.description}"),
+            BarColumn(bar_width=None, complete_style="blue", finished_style="green"),
+            TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+        )
+        mastery_bar.add_task("Mastery", total=100, completed=mastery_pct)
+        
+        # Session Progress Bar
+        session_pct = 0
+        if self.current_index > 0:
+            session_pct = (self.score / self.current_index) * 100
+            
+        session_bar = Progress(
+            TextColumn("[bold yellow]{task.description}"),
+            BarColumn(bar_width=None, complete_style="yellow", finished_style="green"),
+            TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+        )
+        session_bar.add_task("Session Accuracy", total=100, completed=session_pct)
+
+        # Overview Grid
+        grid = Table.grid(expand=True)
+        grid.add_row(mastery_bar)
+        grid.add_row(Text(" "))
+        grid.add_row(session_bar)
+        grid.add_row(Text(" "))
+        
+        # Stats Table
+        stat_table = Table(box=box.SIMPLE, expand=True)
+        stat_table.add_column("Metric", style="dim")
+        stat_table.add_column("Value", justify="right", style="bold white")
         stat_table.add_row("Total Qs", str(stats['total']))
-        stat_table.add_row("Mastered", f"{int(stats['mastery'])}%")
         stat_table.add_row("Reviewed", str(stats['reviewed']))
+        stat_table.add_row("Unseen", str(stats['new']))
         
         # Weak Topics Table
-        weak_table = Table(title="Focus Areas", box=box.SIMPLE)
-        weak_table.add_column("Subject", style="red")
-        weak_table.add_column("Recall", style="dim")
+        weak_table = Table(title="[b red]Focus Areas[/]", box=box.SIMPLE, expand=True, title_style="red")
+        weak_table.add_column("Topic")
+        weak_table.add_column("Recall", justify="right")
         for topic in weak_topics:
-            weak_table.add_row(topic['subject'][:15], f"{int(topic['recall'])}%")
+            color = "red" if topic['recall'] < 50 else "yellow"
+            weak_table.add_row(topic['subject'][:15], f"[{color}]{int(topic['recall'])}%[/]")
 
-        # Current Session Stats
-        session_table = Table(title="Current Session", box=box.SIMPLE)
-        session_table.add_column("Metric")
-        session_table.add_column("Value")
-        session_table.add_row("Score", f"{self.score}/{self.current_index}")
-        
         content = Table.grid(expand=True)
-        content.add_row(stat_table)
-        content.add_row(Text("\n"))
-        content.add_row(weak_table)
-        content.add_row(Text("\n"))
-        content.add_row(session_table)
+        content.add_row(Panel(grid, title="Performance", border_style="blue"))
+        content.add_row(Panel(stat_table, title="Database", border_style="dim"))
+        content.add_row(Panel(weak_table, title="Weakest Topics", border_style="red"))
         
         return Panel(content, title="Analytics", border_style="yellow")
 
     def generate_footer(self):
-        return Panel(Text(self.status_message, style="dim italic"), title="System Status")
+        return Panel(Text(self.status_message, style="italic cyan", justify="center"), style="black on white")
 
     def get_renderable(self):
         self.layout["header"].update(self.generate_header())

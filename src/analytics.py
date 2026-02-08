@@ -72,6 +72,92 @@ class AnalyticsEngine:
         # Sort by recall ascending
         return sorted(active_stats, key=lambda x: x['recall'])[:limit]
 
+    def export_to_text(self, filename="data/analytics_report.txt"):
+        import os
+        
+        # Ensure data directory exists
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+        
+        conn = self._get_conn()
+        cursor = conn.cursor()
+        
+        lines = []
+        lines.append("="*60)
+        lines.append(f"VIVA-LDA DASHBOARD REPORT - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}")
+        lines.append("="*60)
+        lines.append("")
+        
+        # 1. OVERALL STATISTICS
+        overall = self.get_overall_stats()
+        lines.append("## OVERALL PROGRESS")
+        lines.append("-" * 30)
+        lines.append(f"Total Questions:  {overall['total']}")
+        lines.append(f"Questions Seen:   {overall['reviewed']} ({overall['reviewed']/overall['total']*100:.1f}%)")
+        lines.append(f"Mastery Level:    {overall['mastery']:.1f}%")
+        lines.append("")
+        
+        # 2. SUBJECT PERFORMANCE
+        lines.append("## SUBJECT PERFORMANCE")
+        lines.append("-" * 60)
+        lines.append(f"{'Subject':<25} | {'Questions':<10} | {'Recall %':<10}")
+        lines.append("-" * 60)
+        
+        subjects = self.get_subject_performance()
+        if not subjects:
+             lines.append("No data available yet.")
+        else:
+            for s in subjects:
+                sub_name = s['subject'][:23]
+                lines.append(f"{sub_name:<25} | {s['reviewed']:<10} | {s['recall']:.1f}%")
+        lines.append("")
+        
+        # 3. PRIORITY FOCUS AREAS (Weak Subjects)
+        lines.append("## WEAKEST AREAS (Priority Focus)")
+        lines.append("-" * 60)
+        weak_topics = self.get_weakest_topics(limit=5)
+        if not weak_topics:
+            lines.append("No weak areas identified yet.")
+        else:
+             for t in weak_topics:
+                 lines.append(f"[!] {t['subject']}: {t['recall']:.1f}% Recall")
+        lines.append("")
+
+        # 4. DETAILED QUESTION LOG (Weakest First)
+        lines.append("## DETAILED QUESTION ANALYSIS (Lowest Recall First)")
+        lines.append("=" * 80)
+        
+        query = """
+            SELECT id, subject, question_text, correct_answer, recall_score, review_count, last_reviewed_at
+            FROM questions
+            WHERE review_count > 0
+            ORDER BY recall_score ASC, last_reviewed_at DESC
+        """
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        
+        if not rows:
+            lines.append("No questions reviewed yet.")
+        else:
+            for r in rows:
+                lines.append(f"ID: {r['id']} | Subject: {r['subject']}")
+                lines.append(f"Q:  {r['question_text']}")
+                lines.append(f"A:  {r['correct_answer']}")
+                
+                # Contextual status
+                score = r['recall_score']
+                status = "CRITICAL" if score < 0.3 else "WEAK" if score < 0.6 else "GOOD" if score < 0.9 else "MASTERED"
+                
+                lines.append(f"Stats: Recall={score:.2f} ({status}) | Reviewed={r['review_count']}x | Last: {r['last_reviewed_at'][:16]}")
+                lines.append("-" * 80)
+        
+        try:
+            with open(filename, "w", encoding="utf-8") as f:
+                f.write("\n".join(lines))
+            return True
+        except Exception as e:
+            print(f"Error exporting text report: {e}")
+            return False
+
     def close(self):
         if self.conn:
             self.conn.close()

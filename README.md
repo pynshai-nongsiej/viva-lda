@@ -1,26 +1,31 @@
 # Viva-LDA: Offline MPSC LDA Memory Revision System
 
-**Viva-LDA** is an offline, voice-interactive revision system designed to help aspirants prepare for the MPSC LDA (Meghalaya Public Service Commission - Lower Division Assistant) examination. It combines Spaced Repetition (SRS) with a conversational interface to optimize memory retention.
+**Viva-LDA** is a high-performance, offline, voice-interactive revision system designed to help aspirants prepare for the MPSC LDA examination. It combines Spaced Repetition (SRS) with a conversational interface and real-time visual analytics to optimize memory retention.
 
 ## Features
 
--   **Voice-Interactive Quizzes**: The system reads questions and options aloud, and you answer by speaking (A, B, C, D).
--   **Spaced Repetition System (SRS)**: An intelligent memory engine (using `sklearn` SGDRegressor) tracks your performance and schedules reviews based on your recall probability.
--   **PDF Ingestion**: Automatically extracting Multiple Choice Questions (MCQs) from PDF files to build your question database.
--   **Offline First**: Designed to run locally without internet access, using offline text-to-speech (Piper) and speech-to-text (VosK/Whisper) models.
--   **Rich Terminal UI**: A beautiful dashboard powered by `rich` to visualize your session progress.
+-   **Pro-Grade Voice Interaction**: 
+    -   **TTS**: Reads questions using high-quality neural models (Jenny Dioco).
+    -   **STT**: Listens to your answers using **Faster-Whisper** (small.en) for near-human accuracy with Indian accents.
+-   **Visual Dashboard**: A beautiful, real-time terminal dashboard powered by `rich`, featuring progress bars, mastery tracking, and live feedback.
+-   **Excel Analytics**: Automatically exports detailed session data to `data/analytics_dashboard.xlsx` for long-term tracking.
+-   **Spaced Repetition System (SRS)**: An intelligent memory engine (using `sklearn` SGDRegressor) tracks your performance and prioritizes weak topics.
+-   **PDF Ingestion**: Automatically extracts MCQs from PDF files to populate your local database.
+-   **100% Offline**: No internet required after initial setup.
 
 ## Prerequisites
 
--   **Python 3.8+**
--   **macOS** (Verified on macOS, likely works on Linux with adjustments)
--   **Audio Hardware**: Microphone and Speakers
+-   **Python 3.10+**
+-   **Audio Hardware**: Microphone and Speakers.
+-   **System libraries**:
+    -   **macOS**: `brew install portaudio` (Required for microphone access)
+    -   **Linux**: `sudo apt-get install portaudio19-dev`
 
 ## Installation
 
 1.  **Clone the Repository**
     ```bash
-    git clone <your-repo-url>
+    git clone https://github.com/pynshainongsiej/viva-lda.git
     cd Viva-LDA
     ```
 
@@ -29,65 +34,50 @@
     pip install -r requirements.txt
     ```
 
-3.  **Download Voice Models**
-    The system requires external models for speech processing. These are too large for GitHub and must be placed in the `models/` directory.
-
-    -   **Text-to-Speech (Piper)**:
-        -   Download the `en_GB-jenny_dioco-medium.onnx` and its JSON config.
-        -   Place them in `models/piper/`.
-    -   **Speech-to-Text (Whisper)**:
-        -   The system uses `faster-whisper`. It will attempt to download the `small.en` model automatically on the first run, or you can pre-download it.
-
-    *Note: Ensure your `models/` directory structure looks like this:*
-    ```
-    models/
-    └── piper/
-        ├── en_GB-jenny_dioco-medium.onnx
-        └── en_GB-jenny_dioco-medium.onnx.json
-    ```
+3.  **Download TTS Model**
+    -   Download `en_GB-jenny_dioco-medium.onnx` and `en_GB-jenny_dioco-medium.onnx.json`.
+    -   Place them in `models/piper/`.
+    *(Note: The Whisper STT model will download automatically on the first run ~480MB)*
 
 ## Usage
 
 ### 1. Ingesting Questions
-Before starting a session, you need to populate the database with questions from your study material (PDFs).
-
+Populate the database with MCQs from your PDF study material.
 ```bash
-# Syntax
-python3 main.py ingest <path_to_pdf> --subject "<Subject Name>"
-
-# Example
 python3 main.py ingest "PDF/Indian History.pdf" --subject "History"
 ```
-*Note: The ingestion script expects MCQs in a specific format (Question followed by Options A/B/C/D).*
 
 ### 2. Starting a Revision Session
-Run the main interactive session. The system will select questions based on your memory needs.
-
+Run the main interactive session. command-line arguments allow customization.
 ```bash
-# Start a session with default 10 questions
+# Default session (10 questions)
 python3 main.py start
 
-# Start a session with 20 questions
-python3 main.py start -n 20
+# Custom length
+python3 main.py start --count 20
 ```
 
-### 3. Debug Mode (No Voice)
-If you want to test the logic without speaking, use the debug flag. You can type your answers.
-
+### 3. Debug Mode (Silent)
+Test the logic without voice interaction.
 ```bash
-python3 main.py start --debug
+python3 main.py --debug start
 ```
+
+## Analytics
+After every session, a detailed report is generated at `data/analytics_report.txt`.
+It includes:
+-   **Overall Progress**: Total questions seen and mastery level.
+-   **Subject Performance**: A clear table showing recall rates per subject.
+-   **Priority Areas**: Highlights the subjects you need to focus on.
+-   **Detailed Log**: A list of every question reviewed, sorted by priority.
 
 ## Project Structure
-
--   `main.py`: Entry point for the application.
--   `src/session.py`: Manages the quiz flow and selects questions.
--   `src/voice.py`: Handles TTS and STT operations.
--   `src/memory.py`: The "brain" containing the SRS logic and machine learning model.
--   `src/ingestion.py`: Logic for parsing PDFs.
--   `src/ui.py`: Dashboard rendering.
--   `data/`: Stores the SQLite database (`questions.db`).
--   `models/`: Stores the AI models (ignored by git).
+-   `src/session.py`: Manages the quiz flow and Excel export.
+-   `src/voice.py`: Handles Neural TTS and Whisper STT.
+-   `src/memory.py`: The SRS logic and machine learning model.
+-   `src/ui.py`: The Rich Dashboard component.
+-   `src/analytics.py`: Data aggregation and Excel export logic.
+-   `data/`: Stores the SQLite database (`questions.db`) and Excel reports.
 
 ## License
 [MIT](LICENSE)

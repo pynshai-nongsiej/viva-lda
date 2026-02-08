@@ -181,6 +181,11 @@ class SessionManager:
                 # Short pause
                 time.sleep(2)
 
+        # Export Analytics
+        dashboard.update_state(status="Exporting Analytics Report...")
+        print("Detailed report saved to data/analytics_report.txt")
+        dashboard.analytics.export_to_text()
+        
         self.end_session()
 
     def end_session(self):
