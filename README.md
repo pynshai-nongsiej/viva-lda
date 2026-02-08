@@ -8,7 +8,7 @@
     -   **TTS**: Reads questions using high-quality neural models (Jenny Dioco).
     -   **STT**: Listens to your answers using **Faster-Whisper** (small.en) for near-human accuracy with Indian accents.
 -   **Visual Dashboard**: A beautiful, real-time terminal dashboard powered by `rich`, featuring progress bars, mastery tracking, and live feedback.
--   **Excel Analytics**: Automatically exports detailed session data to `data/analytics_dashboard.xlsx` for long-term tracking.
+-   **Detailed Analytics**: Automatically exports a comprehensive text report to `data/analytics_report.txt` after every session.
 -   **Spaced Repetition System (SRS)**: An intelligent memory engine (using `sklearn` SGDRegressor) tracks your performance and prioritizes weak topics.
 -   **PDF Ingestion**: Automatically extracts MCQs from PDF files to populate your local database.
 -   **100% Offline**: No internet required after initial setup.
@@ -72,12 +72,12 @@ It includes:
 -   **Detailed Log**: A list of every question reviewed, sorted by priority.
 
 ## Project Structure
--   `src/session.py`: Manages the quiz flow and Excel export.
+-   `src/session.py`: Manages the quiz flow and analytics export.
 -   `src/voice.py`: Handles Neural TTS and Whisper STT.
 -   `src/memory.py`: The SRS logic and machine learning model.
 -   `src/ui.py`: The Rich Dashboard component.
--   `src/analytics.py`: Data aggregation and Excel export logic.
--   `data/`: Stores the SQLite database (`questions.db`) and Excel reports.
+-   `src/analytics.py`: Data aggregation and report generation logic.
+-   `data/`: Stores the SQLite database (`questions.db`) and reports.
 
 ## License
 [MIT](LICENSE)
