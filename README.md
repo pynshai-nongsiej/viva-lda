@@ -1,64 +1,66 @@
 # Viva-LDA: Offline MPSC LDA Memory Revision System
 
-**Viva-LDA** is a high-performance, offline memory revision system designed to help aspirants prepare for the MPSC LDA examination. It combines Spaced Repetition (SRS) with a rich terminal interface and detailed analytics to optimize memory retention.
+**Viva-LDA v3.0** is a high-performance, offline memory revision system designed for MPSC LDA aspirants. It features an intelligent Spaced Repetition (SRS) engine, a premium TUI dashboard, and detailed analytics.
 
-## Features
+## ✨ New in v3.0
+- **Categorized Ingestion**: Support for nested PDF structures (English, GK, etc.).
+- **Bulk Ingestion Script**: `ingest_all.sh` for one-click database setup.
+- **Subject Filtering**: Start sessions focused on specific subjects (e.g., `English`).
+- **Enhanced TUI**: Premium styling with colored feedback and subject tagging.
 
--   **Visual Dashboard**: A beautiful, real-time terminal dashboard powered by `rich`, featuring progress bars, mastery tracking, and live feedback.
--   **Detailed Analytics**: Automatically exports a comprehensive text report to `data/analytics_report.txt` after every session.
--   **Spaced Repetition System (SRS)**: An intelligent memory engine (using `sklearn` SGDRegressor) tracks your performance and prioritizes weak topics.
--   **PDF Ingestion**: Automatically extracts MCQs from PDF files to populate your local database.
--   **100% Offline**: No internet required.
+## 🚀 Features
+- **Visual Dashboard**: Beautiful real-time terminal dashboard with progress bars and mastery tracking.
+- **Detailed Analytics**: Automatic export to `data/analytics_report.txt`.
+- **Intelligent SRS**: ML-powered question prioritization based on recall performance.
+- **Offline First**: All data and processing stay on your machine.
 
-## Prerequisites
+## 📦 Installation
+1. **Clone & Enter**
+   ```bash
+   git clone https://github.com/pynshainongsiej/viva-lda.git
+   cd Viva-LDA
+   ```
+2. **Install Deps**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
--   **Python 3.10+**
+## 🛠 Usage
 
-## Installation
-
-1.  **Clone the Repository**
-    ```bash
-    git clone https://github.com/pynshainongsiej/viva-lda.git
-    cd Viva-LDA
-    ```
-
-2.  **Install Dependencies**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-## Usage
-
-### 1. Ingesting Questions
-Populate the database with MCQs from your PDF study material.
+### 1. Ingesting Questions (Bulk)
+To reset the database and ingest all PDFs in the `PDF/` folder:
 ```bash
-python3 main.py ingest "PDF/Indian History.pdf" --subject "History"
+bash ingest_all.sh
 ```
 
-### 2. Starting a Revision Session
-Run the main interactive session. command-line arguments allow customization.
+### 2. Manual Ingestion
 ```bash
-# Default session (10 questions)
+# Ingest a single PDF
+python3 main.py ingest "PDF/GK/MPSC LDA Biology MCQs.pdf" --subject "GK"
+
+# Ingest an entire directory
+python3 main.py ingest-dir "PDF/English" --subject "English"
+```
+
+### 3. Revision Sessions
+```bash
+# Standard session (Automatically opens interactive selection menu)
 python3 main.py start
 
-# Custom length
-python3 main.py start --count 20
+# Specific subject revision (Bypass menu)
+python3 main.py start --subject "English" --count 15
 ```
 
-## Analytics
-After every session, a detailed report is generated at `data/analytics_report.txt`.
-It includes:
--   **Overall Progress**: Total questions seen and mastery level.
--   **Subject Performance**: A clear table showing recall rates per subject.
--   **Priority Areas**: Highlights the subjects you need to focus on.
--   **Detailed Log**: A list of every question reviewed, sorted by priority.
+## 📊 Analytics
+Reports are saved to `data/analytics_report.txt` after every session, detailing:
+- Mastery levels and recall rates.
+- Weakest topics requiring focus.
+- Historical progress logs.
 
-## Project Structure
--   `src/session.py`: Manages the quiz flow and analytics export.
--   `src/memory.py`: The SRS logic and machine learning model.
--   `src/ui.py`: The Rich Dashboard component.
--   `src/analytics.py`: Data aggregation and report generation logic.
--   `data/`: Stores the SQLite database (`questions.db`) and reports.
+## 📂 Structure
+- `src/`: Core logic (UI, Session, SRS, Analytics).
+- `PDF/`: Categorized study material (English / GK).
+- `data/`: Local SQLite database and reports.
 
-## License
-[MIT](LICENSE)
+## 📜 License
+MIT

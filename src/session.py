@@ -16,7 +16,7 @@ class SessionManager:
         self.correct_count = 0
         self.start_time = None
 
-    def get_questions_for_session(self, total_count=10):
+    def get_questions_for_session(self, total_count=10, subject=None):
         conn = sqlite3.connect(DB_PATH)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
@@ -24,20 +24,23 @@ class SessionManager:
         questions = []
         selected_ids = set()
         
+        # Base SQL condition
+        where_clause = "WHERE subject = ?" if subject else "WHERE 1=1"
+        params = [subject] if subject else [] # This line was `params = [subject]` in the instruction, but that would break if subject is None. Reverting to original logic.
         # 1. Priorities
         # Try to get some weak, some new, some review
         target_weak = int(total_count * 0.5)
         target_new = int(total_count * 0.2)
         
         # Fetch Weak
-        cursor.execute("SELECT * FROM questions WHERE review_count > 0 ORDER BY recall_score ASC LIMIT ?", (target_weak,))
+        cursor.execute(f"SELECT * FROM questions {where_clause} AND review_count > 0 ORDER BY recall_score ASC LIMIT ?", (*params, target_weak))
         rows = cursor.fetchall()
         for r in rows:
             questions.append(dict(r))
             selected_ids.add(r['id'])
             
         # Fetch New
-        cursor.execute("SELECT * FROM questions WHERE review_count = 0 ORDER BY RANDOM() LIMIT ?", (target_new,))
+        cursor.execute(f"SELECT * FROM questions {where_clause} AND review_count = 0 ORDER BY RANDOM() LIMIT ?", (*params, target_new))
         rows = cursor.fetchall()
         for r in rows:
             if r['id'] not in selected_ids:
@@ -48,19 +51,19 @@ class SessionManager:
         remainder = total_count - len(questions)
         if remainder > 0:
             placeholders = ','.join('?' * len(selected_ids)) if selected_ids else '-1'
-            sql = f"SELECT * FROM questions WHERE id NOT IN ({placeholders}) AND review_count > 0 ORDER BY RANDOM() LIMIT ?"
-            cursor.execute(sql, (*selected_ids, remainder))
+            sql = f"SELECT * FROM questions {where_clause} AND id NOT IN ({placeholders}) AND review_count > 0 ORDER BY RANDOM() LIMIT ?"
+            cursor.execute(sql, (*params, *selected_ids, remainder))
             rows = cursor.fetchall()
             for r in rows:
                 questions.append(dict(r))
                 selected_ids.add(r['id'])
                 
-        # If still need more, fill with NEW
+        # If still need more, fill with ANY remaining
         remainder = total_count - len(questions)
         if remainder > 0:
             placeholders = ','.join('?' * len(selected_ids)) if selected_ids else '-1'
-            sql = f"SELECT * FROM questions WHERE id NOT IN ({placeholders}) AND review_count = 0 ORDER BY RANDOM() LIMIT ?"
-            cursor.execute(sql, (*selected_ids, remainder))
+            sql = f"SELECT * FROM questions {where_clause} AND id NOT IN ({placeholders}) ORDER BY RANDOM() LIMIT ?"
+            cursor.execute(sql, (*params, *selected_ids, remainder))
             rows = cursor.fetchall()
             for r in rows:
                 questions.append(dict(r))
@@ -70,14 +73,37 @@ class SessionManager:
         random.shuffle(questions)
         return questions
 
-    def run_session(self, count=10):
+    def get_available_subjects(self):
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT DISTINCT subject FROM questions")
+        subs = [r[0] for r in cursor.fetchall()]
+        conn.close()
+        return sorted(subs)
+
+    def run_session(self, count=10, subject=None):
         from rich.live import Live
         from src.ui import DashboardUI
         
         dashboard = DashboardUI()
         
+        # Interactive Subject Selection if not provided
+        if subject is None:
+            available = self.get_available_subjects()
+            if available:
+                dashboard.update_state(status="Select Subject to Begin...")
+                console.clear()
+                console.print(dashboard.get_renderable(mode="selection", subjects=available))
+                
+                choices = [str(i) for i in range(len(available) + 1)]
+                choice = Prompt.ask("\nSelect Subject", choices=choices, default="0")
+                
+                if choice != "0":
+                    subject = available[int(choice) - 1]
+                    dashboard.update_state(status=f"Subject: {subject} Selected.")
+
         # Initial Fetch
-        questions = self.get_questions_for_session(count)
+        questions = self.get_questions_for_session(count, subject)
         
         if not questions:
             console.print("[red]No questions found in database. Please ingest a PDF first.[/red]")
