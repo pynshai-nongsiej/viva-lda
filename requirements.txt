@@ -1,8 +1,4 @@
 pdfplumber
 scikit-learn
 numpy
-sounddevice
-pyaudio
-TTS
 rich
-faster-whisper

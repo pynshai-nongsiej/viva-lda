@@ -2,11 +2,10 @@
 import sys
 import os
 import argparse
-from src import ingestion, session, voice
+from src import ingestion, session
 
 def main():
     parser = argparse.ArgumentParser(description="Offline MPSC LDA Memory Revision System")
-    parser.add_argument("--debug", action="store_true", help="Enable text-only debug mode (no voice)")
     
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
@@ -21,11 +20,6 @@ def main():
 
     args = parser.parse_args()
     
-    # Set global debug mode
-    if args.debug:
-        voice.DEBUG_MODE = True
-        print("DEBUG MODE ENABLED: Voice disabled. Use text input.")
-
     if args.command == "ingest":
         if not os.path.exists(args.pdf_path):
             print(f"Error: File not found: {args.pdf_path}")
@@ -33,18 +27,6 @@ def main():
         ingestion.ingest_pdf(args.pdf_path, args.subject)
 
     elif args.command == "start":
-        # Check model first only if NOT in debug mode
-        if not voice.DEBUG_MODE:
-            try:
-                voice.load_stt_model()
-            except FileNotFoundError:
-                print("Vosk model not found. Attempting to download...")
-                print("Please run the setup script or download the model manually.")
-                return
-            except Exception as e:
-                print(f"Error initializing voice system: {e}")
-                return
-            
         mgr = session.SessionManager()
         mgr.run_session(count=args.count)
 
