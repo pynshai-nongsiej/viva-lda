@@ -16,7 +16,7 @@ class SessionManager:
         self.correct_count = 0
         self.start_time = None
 
-    def get_questions_for_session(self, total_count=10, subject=None):
+    def get_questions_for_session(self, total_count=20, subject=None):
         conn = sqlite3.connect(DB_PATH)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
@@ -81,7 +81,7 @@ class SessionManager:
         conn.close()
         return sorted(subs)
 
-    def run_session(self, count=10, subject=None):
+    def run_session(self, count=20, subject=None):
         from rich.live import Live
         from src.ui import DashboardUI
         

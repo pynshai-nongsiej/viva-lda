@@ -21,7 +21,7 @@ def main():
 
     # Start Session Command
     start_parser = subparsers.add_parser("start", help="Start a revision session")
-    start_parser.add_argument("-n", "--count", type=int, default=10, help="Number of questions")
+    start_parser.add_argument("-n", "--count", type=int, default=20, help="Number of questions")
     start_parser.add_argument("--subject", help="Filter by subject")
 
     args = parser.parse_args()

@@ -100,8 +100,8 @@ class DashboardUI:
             
             # Options Table
             opts = Table(box=box.SIMPLE_HEAD, show_header=False, expand=True, border_style="dim")
-            opts.add_column("Key", style="bold yellow", width=10, justify="center")
-            opts.add_column("Text", style="white")
+            opts.add_column("Key", style="bold yellow on white", width=10, justify="center")
+            opts.add_column("Text", style="black on white")
             
             opts.add_row("[A]", self.current_question['option_a'])
             opts.add_row("[B]", self.current_question['option_b'])
@@ -179,8 +179,18 @@ class DashboardUI:
             color = "red" if topic['recall'] < 50 else "yellow"
             weak_table.add_row(topic['subject'][:15], f"[{color}]{int(topic['recall'])}%[/]")
 
+        # Mastery Prediction
+        prediction = self.analytics.get_mastery_prediction()
+        forecast_text = Text("")
+        if prediction['days_left'] == float('inf'):
+            forecast_text = Text("No mastery data", style="italic dim")
+        else:
+            days = f"{prediction['days_left']:.1f}"
+            forecast_text = Text.from_markup(f"[bold green]{days} Days[/] till full mastery")
+
         content = Table.grid(expand=True)
         content.add_row(Panel(grid, title="Performance", border_style="blue"))
+        content.add_row(Panel(forecast_text, title="Completion Forecast", border_style="magenta", padding=(0, 1)))
         content.add_row(Panel(stat_table, title="Database", border_style="dim"))
         content.add_row(Panel(weak_table, title="Weakest Topics", border_style="red"))
         

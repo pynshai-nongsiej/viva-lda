@@ -65,6 +65,40 @@ class AnalyticsEngine:
             })
         return stats
 
+    def get_mastery_prediction(self):
+        conn = self._get_conn()
+        cursor = conn.cursor()
+        
+        # 1. Total and Mastered
+        cursor.execute("SELECT COUNT(*) FROM questions")
+        total = cursor.fetchone()[0]
+        
+        cursor.execute("SELECT COUNT(*) FROM questions WHERE recall_score >= 0.9")
+        mastered = cursor.fetchone()[0]
+        remaining = total - mastered
+        
+        # 2. Velocity: Questions mastered in the last 24 hours
+        one_day_ago = (datetime.datetime.now() - datetime.timedelta(days=1)).isoformat()
+        cursor.execute("SELECT COUNT(*) FROM questions WHERE last_reviewed_at >= ? AND recall_score >= 0.9", (one_day_ago,))
+        velocity = cursor.fetchone()[0]
+        
+        # Fallback if no activity today: check last 7 days average
+        if velocity == 0:
+            seven_days_ago = (datetime.datetime.now() - datetime.timedelta(days=7)).isoformat()
+            cursor.execute("SELECT COUNT(*) FROM questions WHERE last_reviewed_at >= ? AND recall_score >= 0.9", (seven_days_ago,))
+            velocity_7d = cursor.fetchone()[0]
+            velocity = velocity_7d / 7.0 if velocity_7d > 0 else 0
+            
+        days_left = remaining / velocity if velocity > 0 else float('inf')
+        
+        return {
+            "total": total,
+            "mastered": mastered,
+            "remaining": remaining,
+            "velocity": velocity, # mastered per day
+            "days_left": days_left
+        }
+
     def get_weakest_topics(self, limit=5):
         stats = self.get_subject_performance()
         # Filter for subjects with at least some activity to avoid noise
@@ -149,6 +183,22 @@ class AnalyticsEngine:
                 
                 lines.append(f"Stats: Recall={score:.2f} ({status}) | Reviewed={r['review_count']}x | Last: {r['last_reviewed_at'][:16]}")
                 lines.append("-" * 80)
+        
+        # 5. ML MASTERY PREDICTION
+        prediction = self.get_mastery_prediction()
+        lines.append("")
+        lines.append("## ML MASTERY FORECAST")
+        lines.append("=" * 60)
+        lines.append(f"Remaining Questions: {prediction['remaining']}")
+        lines.append(f"Current Velocity:    {prediction['velocity']:.1f} questions/day")
+        
+        if prediction['days_left'] == float('inf'):
+            lines.append("Timeline: Unable to estimate (No mastery activity recorded)")
+        else:
+            completion_date = (datetime.datetime.now() + datetime.timedelta(days=prediction['days_left'])).strftime('%Y-%m-%d')
+            lines.append(f"Est. Completion:    In {prediction['days_left']:.1f} days")
+            lines.append(f"Projected Mastery:  {completion_date}")
+        lines.append("=" * 60)
         
         try:
             with open(filename, "w", encoding="utf-8") as f:
