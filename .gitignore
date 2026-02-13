@@ -20,7 +20,6 @@ venv/
 # Viva-LDA Specific - Large Data & Models
 models/
 data/
-*.pdf
 tst/
 temp/
 *.wav
