@@ -1,0 +1,101 @@
+Topic,Subtopic,Pattern,Question,A,B,C,D,Answer,Source
+GK,Computer,Standard MCQ,"Who is known as the father of computers?",Charles Babbage,Alan Turing,John von Neumann,Bill Gates,Charles Babbage,Generated
+GK,Computer,Standard MCQ,"Which component is considered the brain of the computer?",ALU,Memory,CPU,Control Unit,CPU,Generated
+GK,Computer,Standard MCQ,"What does ALU stand for?",Arithmetic Logic Unit,Application Logic Unit,Array Logic Unit,Arithmetic Local Unit,Arithmetic Logic Unit,Generated
+GK,Computer,Standard MCQ,"First-generation computers used which technology?",Transistors,Vacuum Tubes,Integrated Circuits,Microprocessors,Vacuum Tubes,Generated
+GK,Computer,Standard MCQ,"Second-generation computers were based on?",Vacuum Tubes,Microprocessors,Transistors,Artificial Intelligence,Transistors,Generated
+GK,Computer,Standard MCQ,"GUI stands for?",Graphical User Interface,Global User Interface,Graphics Utility Interface,General User Interface,Graphical User Interface,Generated
+GK,Computer,Standard MCQ,"Which of the following is an input device?",Monitor,Printer,Keyboard,Speaker,Keyboard,Generated
+GK,Computer,Standard MCQ,"Which of the following is an output device?",Mouse,Scanner,Microphone,Printer,Printer,Generated
+GK,Computer,Standard MCQ,"The speed of a CPU is typically measured in?",Gigabytes,Gigahertz,Megabits,Pixels,Gigahertz,Generated
+GK,Computer,Standard MCQ,"SMPS stands for?",Switched Mode Power Supply,Single Mode Power Supply,Simple Mode Power Supply,Storage Mode Power Supply,Switched Mode Power Supply,Generated
+GK,Computer,Standard MCQ,"1 Byte is equal to?",4 bits,8 bits,16 bits,32 bits,8 bits,Generated
+GK,Computer,Standard MCQ,"Half a byte is known as?",Nibble,Bit,Word,Pixel,Nibble,Generated
+GK,Computer,Standard MCQ,"1 KB is equal to?",1000 Bytes,1024 Bytes,1000 Bits,1024 Bits,1024 Bytes,Generated
+GK,Computer,Standard MCQ,"Which of the following memory is volatile?",ROM,PROM,RAM,EEPROM,RAM,Generated
+GK,Computer,Standard MCQ,"Which memory is non-volatile?",RAM,Cache,ROM,Register,ROM,Generated
+GK,Computer,Standard MCQ,"Cache memory acts between?",CPU and RAM,RAM and ROM,CPU and Hard Disk,ROM and Hard Disk,CPU and RAM,Generated
+GK,Computer,Standard MCQ,"USB stands for?",Universal Serial Bus,Uniform Serial Bus,Universal Standard Bus,Uniform Standard Bus,Universal Serial Bus,Generated
+GK,Computer,Standard MCQ,"BIOS is stored in?",RAM,ROM,Hard Disk,Cache,ROM,Generated
+GK,Computer,Standard MCQ,"SSD stands for?",Solid State Drive,Single State Drive,Solid Storage Drive,Single Storage Drive,Solid State Drive,Generated
+GK,Computer,Standard MCQ,"Which of the following is the fastest memory?",RAM,Cache,Register,Hard Disk,Register,Generated
+GK,Computer,Standard MCQ,"An error in a computer program is called?",Bug,Virus,Spam,Malware,Bug,Generated
+GK,Computer,Standard MCQ,"The process of finding and fixing bugs is called?",Compiling,Executing,Debugging,Running,Debugging,Generated
+GK,Computer,Standard MCQ,"Operating System is an example of?",Application Software,System Software,Utility Software,Malware,System Software,Generated
+GK,Computer,Standard MCQ,"Which of the following is an open-source operating system?",Windows 10,Mac OS,Linux,iOS,Linux,Generated
+GK,Computer,Standard MCQ,"Which key combination is used to reboot the computer?",Ctrl+Shift+Del,Ctrl+Alt+Tab,Ctrl+Alt+Del,Shift+Alt+Del,Ctrl+Alt+Del,Generated
+GK,Computer,Standard MCQ,"POST stands for?",Power On Self Test,Power Off Self Test,Program On Self Test,Program Off Self Test,Power On Self Test,Generated
+GK,Computer,Standard MCQ,"A light pen is which type of device?",Output device,Optical input device,Storage device,Network device,Optical input device,Generated
+GK,Computer,Standard MCQ,"VDU stands for?",Virtual Display Unit,Visual Display Unit,Video Display Unit,Visual Desktop Unit,Visual Display Unit,Generated
+GK,Computer,Standard MCQ,"MICR stands for?",Magnetic Ink Character Recognition,Magnetic Ink Code Reader,Magnetic Ink Computer Recognition,Magnetic Ink Character Reader,Magnetic Ink Character Recognition,Generated
+GK,Computer,Standard MCQ,"Which of the following translates high-level language to machine language line by line?",Compiler,Assembler,Interpreter,Linker,Interpreter,Generated
+GK,Computer,Standard MCQ,"MS Word is an example of?",System Software,Application Software,Operating System,Utility Software,Application Software,Generated
+GK,Computer,Standard MCQ,"What is the shortcut key to save a document?",Ctrl+S,Ctrl+V,Ctrl+C,Ctrl+X,Ctrl+S,Generated
+GK,Computer,Standard MCQ,"What is the shortcut key for Print?",Ctrl+P,Shift+P,Alt+P,Windows Key+P,Ctrl+P,Generated
+GK,Computer,Standard MCQ,"What is the shortcut key for Undo?",Ctrl+Y,Ctrl+Z,Ctrl+U,Ctrl+X,Ctrl+Z,Generated
+GK,Computer,Standard MCQ,"What is the shortcut key for Redo?",Ctrl+Z,Ctrl+Y,Ctrl+R,Ctrl+X,Ctrl+Y,Generated
+GK,Computer,Standard MCQ,"What is the shortcut key for Cut?",Ctrl+C,Ctrl+V,Ctrl+X,Ctrl+Z,Ctrl+X,Generated
+GK,Computer,Standard MCQ,"What is the shortcut key to Select All?",Ctrl+A,Ctrl+S,Ctrl+L,Ctrl+P,Ctrl+A,Generated
+GK,Computer,Standard MCQ,"What is the shortcut key to find text?",Ctrl+F,Ctrl+H,Ctrl+G,Ctrl+S,Ctrl+F,Generated
+GK,Computer,Standard MCQ,"What is the default alignment in MS Word?",Right,Center,Justify,Left,Left,Generated
+GK,Computer,Standard MCQ,"What is the shortcut key to center align text?",Ctrl+C,Ctrl+E,Ctrl+A,Ctrl+J,Ctrl+E,Generated
+GK,Computer,Standard MCQ,"What is the shortcut to justify text?",Ctrl+J,Ctrl+E,Ctrl+L,Ctrl+R,Ctrl+J,Generated
+GK,Computer,Standard MCQ,"What is the default font in MS Word 2007 and later?",Times New Roman,Arial,Calibri,Comic Sans,Calibri,Generated
+GK,Computer,Standard MCQ,"What is the maximum zoom percentage in MS Word?",100%,200%,400%,500%,500%,Generated
+GK,Computer,Standard MCQ,"Portrait and Landscape are?",Page Orientations,Page Sizes,Page Layouts,Page Margins,Page Orientations,Generated
+GK,Computer,Standard MCQ,"Thesaurus tool in MS Word is used for?",Spelling Check,Grammar Check,Synonyms and Antonyms,Word Count,Synonyms and Antonyms,Generated
+GK,Computer,Standard MCQ,"What is the shortcut key for spell check?",F5,F7,F9,F11,F7,Generated
+GK,Computer,Standard MCQ,"To go to the beginning of a document, which key is pressed?",Home,Ctrl+Home,Shift+Home,Alt+Home,Ctrl+Home,Generated
+GK,Computer,Standard MCQ,"A number or letter that appears little above the normal text is called?",Superscript,Subscript,Strikethrough,Highlight,Superscript,Generated
+GK,Computer,Standard MCQ,"A number or letter that appears little below the normal text is called?",Superscript,Subscript,Strikethrough,Highlight,Subscript,Generated
+GK,Computer,Standard MCQ,"What is the shortcut for replacing text in MS Word?",Ctrl+F,Ctrl+R,Ctrl+H,Ctrl+G,Ctrl+H,Generated
+GK,Computer,Standard MCQ,"MS Excel is a?",Word Processor,Spreadsheet program,Presentation program,Database program,Spreadsheet program,Generated
+GK,Computer,Standard MCQ,"Rows in MS Excel are labeled as?",Letters,Numbers,Symbols,Roman Numerals,Numbers,Generated
+GK,Computer,Standard MCQ,"Columns in MS Excel are labeled as?",Letters,Numbers,Symbols,Roman Numerals,Letters,Generated
+GK,Computer,Standard MCQ,"The intersection of a row and a column is called a?",Cell,Box,Table,Grid,Cell,Generated
+GK,Computer,Standard MCQ,"Formulas in Excel always begin with which symbol?",Plus (+),Minus (-),Asterisk (*),Equals (=),Equals (=),Generated
+GK,Computer,Standard MCQ,"What is the default file extension for Excel 2007 and later?",.xls,.xlsx,.xlt,.xlsm,.xlsx,Generated
+GK,Computer,Standard MCQ,"What is the shortcut key to edit the active cell in Excel?",F1,F2,F3,F4,F2,Generated
+GK,Computer,Standard MCQ,"Which function is used to add numbers in Excel?",ADD(),SUM(),PLUS(),TOTAL(),SUM(),Generated
+GK,Computer,Standard MCQ,"In Excel, a collection of worksheets is called?",Workbook,Workspace,Worksheet Group,File,Workbook,Generated
+GK,Computer,Standard MCQ,"What is the shortcut to insert a new worksheet in Excel?",Shift+F11,Ctrl+F11,Alt+F11,Shift+F12,Shift+F11,Generated
+GK,Computer,Standard MCQ,"MS PowerPoint is used for?",Word Processing,Spreadsheets,Presentations,Databases,Presentations,Generated
+GK,Computer,Standard MCQ,"What is the shortcut to start a slide show from the beginning?",F2,F5,F7,F9,F5,Generated
+GK,Computer,Standard MCQ,"What is the shortcut to start a slide show from the current slide?",Shift+F5,Ctrl+F5,Alt+F5,Shift+F7,Shift+F5,Generated
+GK,Computer,Standard MCQ,"What is the shortcut to insert a new slide in PowerPoint?",Ctrl+N,Ctrl+S,Ctrl+M,Ctrl+P,Ctrl+M,Generated
+GK,Computer,Standard MCQ,"What is the default file extension of a PowerPoint presentation?",.ppt,.pptx,.pps,.ppsx,.pptx,Generated
+GK,Computer,Standard MCQ,"Motion effects applied to individual elements on a slide are called?",Transitions,Animations,Slide Designs,Themes,Animations,Generated
+GK,Computer,Standard MCQ,"Effects applied when moving from one slide to another are called?",Transitions,Animations,Slide Designs,Themes,Transitions,Generated
+GK,Computer,Standard MCQ,"Which view displays all slides as thumbnails?",Normal View,Slide Show View,Slide Sorter View,Notes Page View,Slide Sorter View,Generated
+GK,Computer,Standard MCQ,"What is the shortcut to open an existing presentation?",Ctrl+N,Ctrl+O,Ctrl+E,Ctrl+P,Ctrl+O,Generated
+GK,Computer,Standard MCQ,"Which shortcut key is used to duplicate the current slide?",Ctrl+C,Ctrl+D,Ctrl+X,Ctrl+V,Ctrl+D,Generated
+GK,Computer,Standard MCQ,"Internet is a?",LAN,MAN,WAN,PAN,WAN,Generated
+GK,Computer,Standard MCQ,"WWW stands for?",World Wide Web,World Web Wide,Wide World Web,Web World Wide,World Wide Web,Generated
+GK,Computer,Standard MCQ,"HTTP stands for?",Hypertext Transfer Protocol,Hyper Transfer Text Protocol,Hypertext Transmission Protocol,Hyper Transmission Text Protocol,Hypertext Transfer Protocol,Generated
+GK,Computer,Standard MCQ,"URL stands for?",Universal Resource Locator,Uniform Resource Locator,Universal Resource Link,Uniform Resource Link,Uniform Resource Locator,Generated
+GK,Computer,Standard MCQ,"IP stands for?",Internet Provider,Internet Protocol,Internal Protocol,Internal Provider,Internet Protocol,Generated
+GK,Computer,Standard MCQ,"Which of the following is a web browser?",Google,Yahoo,Bing,Google Chrome,Google Chrome,Generated
+GK,Computer,Standard MCQ,"Which of the following is a search engine?",Mozilla Firefox,Google Chrome,Google,Safari,Google,Generated
+GK,Computer,Standard MCQ,"HTML stands for?",Hypertext Markup Language,Hypertext Machine Language,Hypertext Main Language,Hypertext Modern Language,Hypertext Markup Language,Generated
+GK,Computer,Standard MCQ,"ISP stands for?",Internet Service Provider,Internal Service Provider,Internet System Provider,Internal System Provider,Internet Service Provider,Generated
+GK,Computer,Standard MCQ,"Moving from one website to another is called?",Browsing,Surfing,Navigating,All of the above,All of the above,Generated
+GK,Computer,Standard MCQ,"In an email, BCC stands for?",Blind Carbon Copy,Blank Carbon Copy,Blind Copy Carbon,Blank Copy Carbon,Blind Carbon Copy,Generated
+GK,Computer,Standard MCQ,"Spam is also known as?",Important email,Junk email,Draft email,Starred email,Junk email,Generated
+GK,Computer,Standard MCQ,"A network that covers a small geographic area is?",LAN,MAN,WAN,PAN,LAN,Generated
+GK,Computer,Standard MCQ,"The unique address of a device on a network is called?",MAC address,IP address,URL,Domain,IP address,Generated
+GK,Computer,Standard MCQ,"Wi-Fi stands for?",Wireless Fidelity,Wireless Fiber,Wired Fidelity,Wired Fiber,Wireless Fidelity,Generated
+GK,Computer,Standard MCQ,"The physical layout of a network is called its?",Protocol,Topology,Routing,Architecture,Topology,Generated
+GK,Computer,Standard MCQ,"A device that connects two different networks?",Hub,Switch,Router,Modem,Router,Generated
+GK,Computer,Standard MCQ,"Software that prevents unauthorized access to a network?",Antivirus,Firewall,Malware,Spyware,Firewall,Generated
+GK,Computer,Standard MCQ,"A malicious program that replicates itself?",Worm,Trojan,Spyware,Adware,Worm,Generated
+GK,Computer,Standard MCQ,"Phishing is a type of?",Software,Hardware,Cybercrime,Network,Cybercrime,Generated
+GK,Computer,Standard MCQ,"PDF stands for?",Portable Document Format,Portable Data Format,Printed Document Format,Printed Data Format,Portable Document Format,Generated
+GK,Computer,Standard MCQ,"JPEG stands for?",Joint Photographic Experts Group,Joint Picture Experts Group,Joint Photo Experts Group,Joint Pixel Experts Group,Joint Photographic Experts Group,Generated
+GK,Computer,Standard MCQ,"ASCII stands for?",American Standard Code for Information Interchange,American Standard Code for Internet Interchange,Asian Standard Code for Information Interchange,Asian Standard Code for Internet Interchange,American Standard Code for Information Interchange,Generated
+GK,Computer,Standard MCQ,"DBMS stands for?",Database Management System,Data Management System,Database Maintenance System,Data Maintenance System,Database Management System,Generated
+GK,Computer,Standard MCQ,"SQL stands for?",Structured Query Language,Simple Query Language,Standard Query Language,System Query Language,Structured Query Language,Generated
+GK,Computer,Standard MCQ,"The first computer virus was known as?",Creeper,Slammer,Blaster,ILOVEYOU,Creeper,Generated
+GK,Computer,Standard MCQ,"To reload a web page, which key is pressed?",F2,F3,F4,F5,F5,Generated
+GK,Computer,Standard MCQ,"What is the shortcut for opening the Run dialog box in Windows?",Windows Key + R,Windows Key + E,Windows Key + D,Windows Key + M,Windows Key + R,Generated
+GK,Computer,Standard MCQ,"MAC address stands for?",Media Access Control,Main Access Control,Memory Access Control,Machine Access Control,Media Access Control,Generated
+GK,Computer,Standard MCQ,"What does VPN stand for?",Virtual Private Network,Virtual Public Network,Visual Private Network,Visual Public Network,Virtual Private Network,Generated
