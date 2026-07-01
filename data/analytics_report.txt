@@ -1,0 +1,47 @@
+============================================================
+VIVA-LDA DASHBOARD REPORT - 2026-06-25 23:25
+============================================================
+
+## OVERALL PROGRESS
+------------------------------
+Total Questions:  753
+Questions Seen:   2 (0.3%)
+Mastery Level:    70.0%
+
+## SUBJECT PERFORMANCE
+------------------------------------------------------------
+Subject                   | Questions  | Recall %  
+------------------------------------------------------------
+GK - Computer             | 0          | 0.0%
+GK - General              | 0          | 0.0%
+GK - Geography            | 0          | 0.0%
+GK - History              | 0          | 0.0%
+GK - Polity               | 0          | 0.0%
+GK - Sports               | 0          | 0.0%
+GK - Science              | 1          | 1.0%
+GK - Meghalaya            | 1          | 1.2%
+
+## WEAKEST AREAS (Priority Focus)
+------------------------------------------------------------
+[!] GK - Science: 1.0% Recall
+[!] GK - Meghalaya: 1.2% Recall
+
+## DETAILED QUESTION ANALYSIS (Lowest Recall First)
+================================================================================
+ID: 743 | Subject: GK - Meghalaya
+Q:  The High court of Meghalaya was established in:
+A:  B
+Stats: Recall=0.70 (GOOD) | Reviewed=1x | Last: 2026-06-25T23:25
+--------------------------------------------------------------------------------
+ID: 72 | Subject: GK - Science
+Q:  Family Culicidae is the scientific name of whom?
+A:  B
+Stats: Recall=0.70 (GOOD) | Reviewed=1x | Last: 2026-06-25T18:35
+--------------------------------------------------------------------------------
+
+## ML MASTERY FORECAST
+============================================================
+Remaining Questions: 753
+Current Velocity:    0.0 questions/day
+Timeline: Unable to estimate (No mastery activity recorded)
+============================================================
